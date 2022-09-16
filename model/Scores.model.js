@@ -15,3 +15,5 @@ const Score = mongoose.Schema({
     timestamps:true,
     versionkey:false
 }) 
+
+module.exports = new mongoose.model("score", Score)
