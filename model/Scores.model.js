@@ -7,7 +7,7 @@ const Score = mongoose.Schema({
     totalWords : {type:Number, required:true},
     totalChars : {type:Number, required:true},
     totalWrongChars : {type:Number, required:true},
-    freqOfWrongChars : {type:Object, default : {}},
+    freqOfWrongChars : [[{type:String}]],
     feedback : {type:String, },
     paragraphTitle : {type:String, required:true},
     user : {type:mongoose.Types.ObjectId, ref:"user"}
