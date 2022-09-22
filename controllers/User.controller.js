@@ -9,28 +9,29 @@ const route = express.Router();
 route.post("/", async (req, res)=>{
     try{
         const user = await User.findOne({email:req.body.email})
-        var token = jwt.sign({ email: req.body.email }, process.env.SECRET_KEY);
+        
         if(!user)
         {
             const resp = await User.create(req.body);
+            let token = jwt.sign({ id:resp._id, email: req.body.email, image:req.body.image }, process.env.SECRET_KEY);
             res.status(201).send({error:false,message:"registered", token, data:resp})
         }
         else
         {
+            let token = jwt.sign({ id:user._id, email: req.body.email, image:req.body.image }, process.env.SECRET_KEY);
             res.status(200).send({error:false, message:"loggedin", token, data:user})
         } 
-    }
+    } 
     catch(err)
     {
         res.status(200).send({error:true, message:err})
     } 
-
 })
 
 route.get("/:id",async(req,res)=>{
     try{
       var decoded = jwt.verify(req.params.id, process.env.SECRET_KEY);
-      return res.status(200).send({error:false,email:decoded.email})
+      return res.status(200).send({error:false, id:decoded.id, email:decoded.email, image:decoded.image})
     }catch(err){
       return res.status(400).send({error:true,message:err.message})
     }
