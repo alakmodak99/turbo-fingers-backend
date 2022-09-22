@@ -10,6 +10,7 @@ const Score = require("../model/Scores.model")
 route.post("/:token", async(req, res)=>{
     try{
         var decoded = jwt.verify(req.params.token, process.env.SECRET_KEY);
+        console.log(decoded)
         if(decoded.error)
         {
             return res.status(400).send({error:true,message:"Invalid token"})
@@ -17,9 +18,9 @@ route.post("/:token", async(req, res)=>{
         else
         {
             try{
-                const user = await User.findOne({email:decoded.email})
-                const resp = await Score.create({...req.body, user:user._id})
-                return res.status(200).send({data:resp, user:user, error:false, message:"Record inserted"});
+                // const user = await User.findOne({email:decoded.email})
+                const resp = await Score.create(req.body)
+                return res.status(200).send({data:resp, error:false, message:"Record inserted"});
             }
             catch(err)
             {
