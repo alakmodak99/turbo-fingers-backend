@@ -4,7 +4,7 @@ const User = mongoose.Schema({
     email:{type:String, required:true},
     name:{type:String, required: true},
     image:{type:"String"},
-    authProvied:{type:String, default:"google"} 
+    authProvider:{type:String, default:"google"} 
 },
 {
     versionKey:false,
