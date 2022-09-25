@@ -28,9 +28,9 @@ route.post("/", async (req, res)=>{
     } 
 })
 
-route.get("/:id",async(req,res)=>{
+route.get("/:token",async(req,res)=>{
     try{
-      var decoded = jwt.verify(req.params.id, process.env.SECRET_KEY);
+      var decoded = jwt.verify(req.params.token, process.env.SECRET_KEY);
       return res.status(200).send({error:false, id:decoded.id, email:decoded.email, image:decoded.image})
     }catch(err){
       return res.status(400).send({error:true,message:err.message})
