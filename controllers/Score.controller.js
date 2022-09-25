@@ -32,9 +32,16 @@ route.post("/:token", async(req, res)=>{
       }
 })
 
-route.get("/", async (req, res)=>{
-    const data = await Score.find();
-    res.status(200).send(data);
+route.get("/:token", async (req, res)=>{
+    try{
+        var decoded = jwt.verify(req.params.token, process.env.SECRET_KEY);
+        var scores = await Score.find({user:decoded.id})
+        return res.status(200).send({error:false, data:scores})
+    }
+    catch(e)
+    {
+        return res.status(400).send({error:true, message:e.message});
+    }
 })
 
 module.exports = route;
