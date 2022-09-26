@@ -6,7 +6,7 @@ dotenv.config();
 
 const User = require("../model/User.model")
 const Score = require("../model/Scores.model");
-const Leaderboard = require("../model/Leaderboard");
+const Leaderboard = require("../model/Leaderboard.model");
 
 route.post("/:token", async(req, res)=>{
     try{
