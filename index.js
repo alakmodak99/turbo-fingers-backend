@@ -3,6 +3,7 @@ const cors = require("cors");
 const connect = require("./configs/db");
 const userController = require("./controllers/User.controller");
 const scoreController = require("./controllers/Score.controller")
+const leaderboardController = require("./controllers/Leaderboard.controller");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors());
 
 app.use('/user', userController)
 app.use('/score', scoreController)
+app.use('/leaderboard', leaderboardController)
 
 app.listen(PORT, async()=>{
     await connect();
