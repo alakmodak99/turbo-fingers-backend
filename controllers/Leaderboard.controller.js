@@ -10,6 +10,7 @@ const route = express.Router();
 
 route.get("/:token", async (req, res)=>{
     var resp =  await Leaderboard.find().populate("user").populate("bestScore");
+    resp.sort((a,b)=> b.bestScore.netSpeed - a.bestScore.netSpeed)
     try{
         var decoded = jwt.verify(req.params.token, process.env.SECRET_KEY);
         return res.status(200).send({error:false, userID:decoded.id, data:resp})
