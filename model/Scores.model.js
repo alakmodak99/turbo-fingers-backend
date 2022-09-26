@@ -1,7 +1,8 @@
 const mongoose = require("mongoose")
 
 const Score = mongoose.Schema({
-    speed : {type:Number, required:true},
+    grossSpeed : {type:Number, required:true},
+    netSpeed : {type:String, required:true},
     accuracy : {type:String, required:true},
     totalSeconds : {type:Number, required:true},
     totalWords : {type:Number, required:true},
