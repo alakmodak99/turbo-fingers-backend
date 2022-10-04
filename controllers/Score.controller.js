@@ -8,17 +8,19 @@ const User = require("../model/User.model")
 const Score = require("../model/Scores.model");
 const Leaderboard = require("../model/Leaderboard.model");
 
-route.post("/:token", async(req, res)=>{
+route.get("/:id", async(req, res)=>{
     try{
-        var decoded = jwt.verify(req.params.token, process.env.SECRET_KEY);
-        // console.log(decoded)
-        if(decoded.error)
-        {
-            return res.status(400).send({error:true,message:"Invalid token"})
-        }
-        else
-        {
-            try{
+        const data = await Score.find({user:req.params.id}).sort({updatedAt:-1})
+    return res.send(data)
+    }
+    catch(err)
+    {
+        return res.send(err)
+    }
+})
+
+route.post("/", async(req, res)=>{
+    try{
                 const bestScore = await Leaderboard.findOne({user:req.body.user}).populate("bestScore");
                 const resp = await Score.create(req.body)
 
@@ -37,12 +39,6 @@ route.post("/:token", async(req, res)=>{
                     const insertedScore = await Score.create(req.body)
                     return res.status(200).send({data:insertedScore, error:false, message:"inserted score"});
                 }
-            }
-            catch(err)
-            {
-                res.status(400).send({error:true, message:err.message})
-            }
-        }
       }catch(err){
         return res.status(400).send({error:true,message:err.message})
       }
