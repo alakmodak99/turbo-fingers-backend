@@ -35,9 +35,8 @@ route.post("/", async(req, res)=>{
                     return res.status(200).send({data:updatedRecord, error:false, message:"updated leaderboard"});
                 }
                 else
-                {
-                    const insertedScore = await Score.create(req.body)
-                    return res.status(200).send({data:insertedScore, error:false, message:"inserted score"});
+                {   
+                    return res.status(200).send({data:resp, error:false, message:"inserted score"});
                 }
       }catch(err){
         return res.status(400).send({error:true,message:err.message})
